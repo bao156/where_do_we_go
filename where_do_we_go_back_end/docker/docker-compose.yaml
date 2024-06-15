@@ -1,0 +1,47 @@
+version: '3.9'
+name: where-do-we-go
+services:
+  postgres:
+    image: postgres:14.1-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=AJhvZ4FzLCehCXU
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=where_do_we_go
+  sonarqube:
+    image: sonarqube:lts-community
+    depends_on:
+      - sonar_db
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://sonar_db:5432/sonar
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: sonar
+    ports:
+      - "9001:9000"
+    volumes:
+      - sonarqube_conf:/opt/sonarqube/conf
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+      - sonarqube_temp:/opt/sonarqube/temp
+  sonar_db:
+      image: postgres:14.1-alpine
+      environment:
+        POSTGRES_USER: sonar
+        POSTGRES_PASSWORD: sonar
+        POSTGRES_DB: sonar
+      volumes:
+        - sonar_db:/var/lib/postgresql
+        - sonar_db_data:/var/lib/postgresql/data
+
+volumes:
+    sonarqube_conf:
+    sonarqube_data:
+    sonarqube_extensions:
+    sonarqube_logs:
+    sonarqube_temp:
+    sonar_db:
+    sonar_db_data:

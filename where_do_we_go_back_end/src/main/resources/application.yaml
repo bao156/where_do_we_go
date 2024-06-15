@@ -1,0 +1,23 @@
+server:
+  port: 8080
+spring:
+  banner:
+    location: banner.txt
+  datasource:
+    url: jdbc:postgresql://localhost:5432/where_do_we_go?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
+    username: postgres
+    password: AJhvZ4FzLCehCXU
+  flyway:
+    enabled: true
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+jwt:
+  secret: MmJlYTBmMjQtMDVjOC00YTM5LThiMDYtNjc5ZWFlOWRlOWFl
+  expirationms: 86400000
